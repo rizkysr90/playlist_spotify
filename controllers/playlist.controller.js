@@ -28,7 +28,46 @@ const addSongToPlaylist = (req, res, next) => {
     next(error);
   }
 };
-
+const getSongs = (req, res, next) => {
+  try {
+    const data = playlistService.getSongs();
+    return res.status(200).json({
+      code: 200,
+      message: "berhasil",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const playSong = (req, res, next) => {
+  try {
+    req.title = req.body.title.trim();
+    const data = playlistService.playSong(req);
+    return res.status(200).json({
+      code: 200,
+      message: "berhasil",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const mostPlayed = (req, res, next) => {
+  try {
+    const data = playlistService.mostPlayedSong();
+    return res.status(200).json({
+      code: 200,
+      message: "berhasil",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
   addSongToPlaylist,
+  getSongs,
+  mostPlayed,
+  playSong,
 };

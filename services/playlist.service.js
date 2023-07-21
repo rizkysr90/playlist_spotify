@@ -13,6 +13,30 @@ const addSongToPlaylist = (req) => {
   return result;
 };
 
+const getSongs = () => {
+  return Playlist.findAll();
+};
+const playSong = (req) => {
+  if (Playlist.songs.length < 1) {
+    throw new Error("playlist kosong");
+  }
+  const { title } = req.body;
+  const findSong = Playlist.findByTitle(title);
+  if (!findSong) {
+    throw new Error("judul lagu tidak ditemukan didalam playlist");
+  }
+  Playlist.playSong(findSong.title);
+  return findSong;
+};
+const mostPlayedSong = (req) => {
+  if (Playlist.songs.length < 1) {
+    throw new Error("Playlist kosong");
+  }
+  return Playlist.mostPlayed();
+};
 module.exports = {
   addSongToPlaylist,
+  getSongs,
+  mostPlayedSong,
+  playSong,
 };
